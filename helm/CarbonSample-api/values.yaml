@@ -1,0 +1,63 @@
+# Default values for dashboardmanagement-api.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global:
+  useGlobal: true
+
+replicaCount: 1
+
+app:
+  consulAddress: "http://consul-headless:8500"
+  environment: Development
+  fileConfigPaths: config/appsettings.main.kubernetes.json
+  configType: FILE
+
+image:
+  repository: platform360.azurecr.io/carbonsampleapi
+  pullPolicy: Always
+
+imagePullSecret: "acr"
+nameOverride: "carbonsampleapi"
+fullnameOverride: "carbonsampleapi"
+
+service:
+  type: ClusterIP
+  port: 20000
+
+timescaledb:
+  connectionstring: ""
+  readonlyconnectionstring: ""
+  readOnlyReplicaEnabled: true
+
+ingress:
+  enabled: true
+  hosts:
+  - host: someuri.com
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingressClassName: nginx
+    nginx.org/rewrites: "serviceName=carbonsampleapi rewrite=/;"
+    nginx.org/mergeable-ingress-type: minion
+  tls: []
+
+resources: {}
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+securityContext: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector:
+    env: app
+tolerations: []
+affinity: {}
+podAnnotations: {}

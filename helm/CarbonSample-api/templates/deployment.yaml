@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "carbonsampleapi.fullname" . }}
+  labels:
+    {{- include "carbonsampleapi.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "carbonsampleapi.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "carbonsampleapi.selectorLabels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
+      containers:
+        - name: {{ .Chart.Name }}
+          env:
+            - name: CONSUL_ADDRESS
+              value: {{ .Values.app.consulAddress }}
+            - name: ASPNETCORE_ENVIRONMENT
+              value: {{ .Values.app.environment }}
+            - name: ENVIRONMENT_TYPE
+              value: Kestrel
+            - name: CONFIGURATION_TYPE
+              value: {{ .Values.app.configType }}
+            - name: FILE_CONFIG_PATHS
+              value: {{ .Values.app.fileConfigPaths }}
+           {{- if .Values.enableContainerSecurity }}
+            - name: COMPlus_EnableDiagnostics
+              value: "0"
+            - name: ASPNETCORE_TEMP
+              value: "/app/temp"
+           {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+         {{- if .Values.enableContainerSecurity }}
+          securityContext:            
+            allowPrivilegeEscalation: false            
+            privileged: false            
+            runAsNonRoot: true            
+            runAsUser: 1001
+            readOnlyRootFilesystem: true 
+            capabilities: 
+              drop: 
+                - "CAP_SYS_ADMIN" 
+         {{ else }}
+          securityContext:            
+            {{- toYaml .Values.securityContext | nindent 12 }}
+         {{- end }}
+          ports:
+            - name: app
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: app
+            initialDelaySeconds: 90
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: app
+            initialDelaySeconds: 90
+            periodSeconds: 30
+          {{ if and (hasKey .Values "app") (eq .Values.app.configType "FILE") }}
+          volumeMounts:
+          - name: config-volume
+            mountPath: /app/config
+          {{ if .Values.enableContainerSecurity }}
+          - name: temp
+            mountPath: /app/temp
+          {{ end }}
+          {{ end }}         
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{ if and (hasKey .Values "app") (eq .Values.app.configType "FILE") }}  
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config-{{ .Chart.Name }}
+      {{ if .Values.enableContainerSecurity }}
+      - name: temp
+        emptyDir:
+          medium: ""
+      {{ end }}          
+      {{ end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

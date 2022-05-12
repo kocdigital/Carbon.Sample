@@ -1,0 +1,162 @@
+{{ if and (hasKey .Values "app") (eq .Values.app.configType "FILE") -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config-{{ .Chart.Name }}
+data:
+  appsettings.main.kubernetes.json: |-
+   {
+     {{ $enablementtagsvar := default dict .Values.global -}}
+     {{ $rabbitmqvar := default dict .Values.global.rabbitmq -}}
+     {{ $servicebusvar := default dict .Values.global.servicebus -}}
+     {{- $fullName := include "carbonsampleapi.fullname" . -}}
+     {{ $redisvar := default dict .Values.global.redis -}}
+     {{ $sqlvar := default dict .Values.sql -}}
+     {{ $serilogvar := default dict .Values.global.serilog -}}
+     {{ $elasticvar := default dict .Values.global.elasticsearch -}}
+     {{ $tsdbvar := default dict .Values.timescaledb -}}
+      "Logging": {
+        "LogLevel": {
+          "Default": "Information",
+          "Microsoft": "Warning",
+          "Microsoft.Hosting.Lifetime": "Information"
+        }
+      },
+      "DataLogUri" : "http://datalogmanagement:50005/api/v1/",
+      "CorsPolicy" : {
+            "AllowAnyMethods" : true,
+            "AllowAnyHeaders":true,
+            "AllowAnyOrigin": true,
+            "Origins" : ["http://localhost:9528", "http://localhost:9528/","http://localhost:*", "http://*:*", "http://localhost:8080"]
+      },
+        "MassTransit": {
+     {{ if and (hasKey $enablementtagsvar "rabbitmqEnabled") ($enablementtagsvar.rabbitmqEnabled) (not $rabbitmqvar.externalServer) -}}
+       "BusType": 1,
+     {{ else if and (hasKey $enablementtagsvar "rabbitmqEnabled") (not $enablementtagsvar.rabbitmqEnabled) (not $rabbitmqvar.externalServer) -}}
+       "BusType": 2,
+     {{ else if and (hasKey $enablementtagsvar "rabbitmqEnabled") (not $enablementtagsvar.rabbitmqEnabled) ($rabbitmqvar.externalServer) -}}
+       "BusType": 1,
+     {{ else -}}
+       "BusType": 1,
+     {{ end -}}
+       "RabbitMq": {
+        {{ if  ($rabbitmqvar) -}}
+        {{ if and ($rabbitmqvar) (hasKey $rabbitmqvar "auth") -}}
+         "Host": "{{- $rabbitmqvar.fullnameOverride | default "rabbitmq" -}}",
+         "Username": "{{- ($rabbitmqvar.auth.username) | default "user" -}}",
+         "Password": "{{- ($rabbitmqvar.auth.password) | default "password" -}}",
+         "VirtualHost": "{{- ($rabbitmqvar.auth.vHost) | default "/" -}}",
+        {{ else -}}
+         "Host": "rabbitmq-headless",
+         "Username": "user",
+         "Password": "password",
+         "VirtualHost": "/",
+        {{ end -}}
+        {{ end -}}
+         "Port": 5672
+       },
+       "ServiceBus": {
+        {{ if  ($servicebusvar) -}}
+         "ConnectionString": "{{- $servicebusvar.connectionstring | default "" -}}"
+        {{ else -}}
+         "ConnectionString": ""
+        {{ end }}
+       }
+     },
+      "JwtSettings": {
+        "Authority": "http://identityserver:10067",
+        "RequireHttpsMetaData": false,
+        "Audience": "Platform360.Common.API",
+         "TokenValidationSettings" : {
+               {{ if and (hasKey .Values.ingress "enabled") (.Values.ingress.enabled) -}}
+               "ValidIssuers": ["http://identityserver:10067" ,"https://identityserver:40067" , {{- .Values.global.identityexternalsecureurl | default "http://localhost:10067" | quote -}}]
+               {{ else -}}
+               "ValidIssuers": ["http://identityserver:10067","https://identityserver:40067"]
+               {{ end -}}
+        }
+      },
+       "Authorizations": {
+        "RAM": {
+        "AuthenticationType": 4,
+        "Secret": "{{- .Values.clientSecret | default  "" -}}",
+        "Scope": "Platform360.Common.API",
+        "ClientId": "{{- .Values.clientId | default  "" -}}"
+       }
+      },
+       "TenantId": "{{- .Values.tenantId | default  "" -}}",
+      "Swagger": {
+       {{ if and (hasKey .Values.ingress "enabled") (.Values.ingress.enabled) -}}
+       "EndpointUrl": "{{- range (index .Values.ingress.hosts 0) }}http://{{ . }}/{{ $fullName }} {{- end }}",
+       {{ else -}}
+       "EndpointUrl": "http://localhost:{{- .Values.service.port -}}",
+       {{ end -}}
+       "EndpointPath": "/swagger/v1/swagger.json",
+       "EndpointName": "{{- .Chart.Name -}} V1",
+       "Documents": [
+         {
+           "DocumentName": "v1",
+           "OpenApiInfo": {
+             "Title": "{{- .Chart.Name -}}",
+             "Version": "v1",
+             "Description": "{{- .Chart.Name -}}"
+           },
+           "Security": {
+             "AuthorizationUrl": "{{- $enablementtagsvar.identityexternalsecureurl | default "" -}}",
+              "SecurityDefinitionType": "oauth2",
+             "SecurityFlow": "password",
+             "Scopes": [
+               {
+                 "Key": "Platform360.Common.API",
+                 "Description": "Common API"
+               }
+             ]
+           }
+         }
+       ]
+      },
+      "ConnectionStrings": {
+     {{ if  ($tsdbvar) -}}
+       {{ if and (hasKey $tsdbvar "readOnlyReplicaEnabled") ($tsdbvar.readOnlyReplicaEnabled) -}}
+       "TimeScaleDbConnectionString": "{{- $tsdbvar.connectionstring | default  "Server=localhost;Database=defaultdb;User ID=user;Password='password';Connect Timeout=30;" -}}",
+       "ReadReplicaEnabled": true,
+       "TimeScaleDbReadOnlyConnectionString": "{{- $tsdbvar.readonlyconnectionstring | default  $tsdbvar.connectionstring -}}"
+       {{ else -}}
+       "TimeScaleDbConnectionString": "{{- $tsdbvar.connectionstring | default  "Server=localhost;Database=defaultdb;User ID=user;Password='password';Connect Timeout=30;" -}}"
+       {{ end -}}
+
+     {{ end -}}
+      },
+      "Serilog": {
+       {{ if  ($serilogvar.elasticEnabled) -}}
+       "Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.Elasticsearch" ],
+       "WriteTo": [
+         { "Name": "Console" },
+         {
+        "Name": "Elasticsearch",
+        "Args": {
+          {{ if  ($enablementtagsvar.addElasticSearch) -}}
+          "nodeUris": "http://{{ $elasticvar.name }}-elasticsearch-coordinating:9200",
+          {{ else if and ($elasticvar) (not $enablementtagsvar.addElasticSearch) ($elasticvar.externalServer)}}
+          "nodeUris": "{{- $elasticvar.url | default "http://p360elasticsearch-elasticsearch-coordinating:9200" }},
+          {{ else -}}
+          "nodeUris": "http://p360elasticsearch-elasticsearch-coordinating:9200",
+          {{ end -}}
+          "indexFormat": "{{- $fullName -}}-log-{0:yyyy.MM.dd}"
+        }
+      }
+       ],
+       {{ else -}}
+       "Using": [ "Serilog.Sinks.Console" ],
+       "WriteTo": [
+         { "Name": "Console" }
+       ],
+       {{ end -}}
+       "MinimumLevel": "{{- $serilogvar.level | default  "Information" -}}",
+       "Enrich": [ "FromLogContext", "WithMachineName", "WithThreadId" ],
+       "Properties": {
+         "Application": "Platform360.{{- $fullName -}}.API"
+       }
+     },
+      "AllowedHosts": "*"
+   }
+{{ end -}}
