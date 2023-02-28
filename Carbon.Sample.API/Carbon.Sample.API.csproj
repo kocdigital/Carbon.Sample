@@ -25,12 +25,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Update="appsettings.kube_test.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
 		<EmbeddedResource Update="Resources\Errors.en-US.resx">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</EmbeddedResource>

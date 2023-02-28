@@ -22,6 +22,7 @@ builder.AddCarbonServices((services) =>
 {
     services.AddBearerAuthentication(builder.Configuration);
     services.AddLocalization(o => { o.ResourcesPath = "Resources"; });
+    // :TODO carbon
     services.AddCustomCors(cors);
     services.AddRedisPersister(builder.Configuration);
     services.AddDatabaseContext<SampleDBContext, Program>(builder.Configuration);
