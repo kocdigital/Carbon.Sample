@@ -1,0 +1,362 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Carbon.Sample.API</name>
+    </assembly>
+    <members>
+        <member name="M:Carbon.Sample.API.Application.Controllers.SampleController.GetAllAsync(Carbon.Sample.API.Application.Dto.SampleFilterDto)">
+            <summary>
+            Create Sample
+            </summary>
+            <param name="request">Sample filter model</param>
+            <param name="tenantId">Tenant Id</param>
+            <returns>Created Sample's Id</returns>
+        </member>
+        <member name="M:Carbon.Sample.API.Application.Controllers.SampleController.CreateSample(Carbon.Sample.API.Application.Dto.SampleCreateDto)">
+            <summary>
+            Create Sample
+            </summary>
+            <param name="request">Sample creator model</param>
+            <param name="tenantId">Tenant Id</param>
+            <returns>Created Sample's Id</returns>
+        </member>
+        <member name="M:Carbon.Sample.API.Application.Controllers.SampleController.UpdateSample(Carbon.Sample.API.Application.Dto.SampleUpdateDto,System.Guid,System.Guid)">
+            <summary>
+            Updates Sample
+            </summary>
+            <param name="model">Sample updater model</param>
+            <param name="tenantId">Tenant Id</param>
+            <param name="id">Updated Sample id</param>
+            <returns>Sample's last state</returns>
+        </member>
+        <member name="M:Carbon.Sample.API.Application.Controllers.SampleController.DeleteSample(Carbon.Sample.API.Application.Dto.SampleDeleteDto,System.Guid,System.Guid)">
+            <summary>
+            Deletes the Sample given by id
+            </summary>
+            <param name="id">Sample id</param>
+            <param name="tenantId">Tenant Id</param>
+            <returns>No Content</returns>
+        </member>
+        <member name="T:Platform360.MES.Fault.Resources.Errors">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3001">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3002">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3003">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3004">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3009">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3010">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3011">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3012">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3013">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3014">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3015">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3016">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3017">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3018">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3019">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3020">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3021">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._3022">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._4000">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._4001">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._4002">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._4003">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._4004">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._4005">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._4006">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._4007">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._4008">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._4009">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._4010">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._4011">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5000">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5001">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5002">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5003">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5004">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5005">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5006">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5007">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5008">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5009">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5010">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5011">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5012">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5013">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5014">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5015">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5016">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5017">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5018">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5019">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5020">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5021">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5022">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5023">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5024">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5025">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5026">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5027">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5036">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5037">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:Platform360.MES.Fault.Resources.Errors._5038">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+    </members>
+</doc>

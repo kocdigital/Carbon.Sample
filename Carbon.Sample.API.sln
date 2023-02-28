@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32002.261
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Sample.API", "Carbon.Sample.API\Carbon.Sample.API.csproj", "{7F22ED01-F04B-4BA5-987C-951E18B09A86}"
 EndProject
@@ -17,20 +17,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CarbonSample-api", "CarbonS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{5D38D641-82EA-4617-8539-3E09D874F754}"
 	ProjectSection(SolutionItems) = preProject
-		helm\CarbonSample-api\templates\_helpers.tpl = helm\CarbonSample-api\templates\_helpers.tpl
 		helm\CarbonSample-api\templates\configmap.yaml = helm\CarbonSample-api\templates\configmap.yaml
 		helm\CarbonSample-api\templates\deployment.yaml = helm\CarbonSample-api\templates\deployment.yaml
 		helm\CarbonSample-api\templates\hpa.yaml = helm\CarbonSample-api\templates\hpa.yaml
 		helm\CarbonSample-api\templates\ingress.yaml = helm\CarbonSample-api\templates\ingress.yaml
 		helm\CarbonSample-api\templates\NOTES.txt = helm\CarbonSample-api\templates\NOTES.txt
 		helm\CarbonSample-api\templates\service.yaml = helm\CarbonSample-api\templates\service.yaml
+		helm\CarbonSample-api\templates\_helpers.tpl = helm\CarbonSample-api\templates\_helpers.tpl
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entity-Framework-Migrations", "Entity-Framework-Migrations", "{EEA2E57D-B073-4468-AB48-A9950FD30CB8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Sample.API.MSSQL", "Entity-Framework-Migrations\Carbon.Sample.API.MSSQL\Carbon.Sample.API.MSSQL.csproj", "{D66DB63D-EA75-4035-BB98-4D24AD4081F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carbon.Sample.API.PostgreSQL", "Entity-Framework-Migrations\Carbon.Sample.API.PostgreSQL\Carbon.Sample.API.PostgreSQL.csproj", "{1B266A4F-FFF1-44E1-BFFD-94BE9C20B3B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carbon.Sample.API.PostgreSQL", "Entity-Framework-Migrations\Carbon.Sample.API.PostgreSQL\Carbon.Sample.API.PostgreSQL.csproj", "{1B266A4F-FFF1-44E1-BFFD-94BE9C20B3B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{369D6094-C34A-4AF5-8ACE-F1671080D27D}"
+	ProjectSection(SolutionItems) = preProject
+		nuget.config = nuget.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

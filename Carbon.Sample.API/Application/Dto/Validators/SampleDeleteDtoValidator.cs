@@ -1,4 +1,5 @@
-﻿using Carbon.WebApplication;
+﻿using Carbon.Sample.API.Application.Dto.Validators.Base;
+using Carbon.WebApplication;
 
 using FluentValidation;
 
@@ -6,7 +7,7 @@ using System;
 
 namespace Carbon.Sample.API.Application.Dto.Validators
 {
-	public class SampleDeleteDtoValidator : BaseDtoValidator<SampleDeleteDto>
+    public class SampleDeleteDtoValidator : BaseRequestValidator<SampleDeleteDto>
 	{
 		public SampleDeleteDtoValidator()
 		{
