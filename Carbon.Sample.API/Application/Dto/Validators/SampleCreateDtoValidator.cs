@@ -1,10 +1,11 @@
-﻿using Carbon.WebApplication;
+﻿using Carbon.Sample.API.Application.Dto.Validators.Base;
+using Carbon.WebApplication;
 
 using FluentValidation;
 
 namespace Carbon.Sample.API.Application.Dto.Validators
 {
-	public class SampleCreateDtoValidator : BaseDtoValidator<SampleCreateDto>
+    public class SampleCreateDtoValidator : BaseRequestValidator<SampleCreateDto>
 	{
 		public SampleCreateDtoValidator()
 		{
