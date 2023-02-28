@@ -19,9 +19,8 @@ namespace Carbon.Sample.API.Application.Dto.Base
 
         public BaseRequestPagedDto()
         {
-            PageSize = ApplicationConstant.DefaultIndex;
-            PageIndex = ApplicationConstant.DefaultPageSize;
-            Orderables = new List<Orderable>() { new Orderable() { Value = ApplicationConstant.DefaultOrderBy, IsAscending = false } };
+            PageSize = ApplicationConstant.DefaultPageSize;
+            PageIndex = ApplicationConstant.DefaultIndex;
         }
     }
 }

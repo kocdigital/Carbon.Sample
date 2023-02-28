@@ -48,4 +48,9 @@
 		</None>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Infrastructure\Middlewares" />
+	  <Folder Include="Settings\Configurations\" />
+	</ItemGroup>
+
 </Project>

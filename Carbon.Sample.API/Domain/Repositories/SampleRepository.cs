@@ -18,31 +18,41 @@ namespace Carbon.Sample.API.Domain.Repositories
         public SampleRepository(SampleDBContext context) : base(context)
         {
         }
+
         public override async Task<SampleEntity> CreateAsync(SampleEntity entity)
         {
             entity = await base.CreateAsync(entity);
             return entity;
         }
+
         public async Task<SampleEntity> GetByIdAsync(Expression<Func<SampleEntity, bool>> filters)
         {
             var entity = await context.SampleEntity.FirstOrDefaultAsync(filters);
             return entity;
         }
+
         public override async Task<SampleEntity> UpdateAsync(SampleEntity entity)
         {
             var updatedEntity = await base.UpdateAsync(entity);
             return updatedEntity;
         }
+
         public override async Task<SampleEntity> DeleteAsync(Guid id)
         {
             var entity = await base.DeleteAsync(id);
             return entity;
         }
+
         public async Task<Paged<SampleEntity>> GetAllAsync(SampleFilterDto filter)
         {
             var query = context.SampleEntity
                 .AsNoTracking()
-                .Where(x => x.TenantId == filter.TenantId && !x.IsDeleted);
+                .Where(x => !x.IsDeleted);
+
+            if (filter.TenantId != Guid.Empty)
+            {
+                query = query.Where(x => x.TenantId == filter.TenantId);
+            }
 
             if (filter.Ids != null && filter.Ids.Count > 0)
             {
@@ -53,6 +63,7 @@ namespace Carbon.Sample.API.Domain.Repositories
             {
                 query = query.Where(x => x.IsActive == filter.IsActive);
             }
+
             query = query.OrderBy(filter.Orderables);
 
             int totalPagesCount = 1;
@@ -74,7 +85,6 @@ namespace Carbon.Sample.API.Domain.Repositories
                 TotalPageCount = totalPagesCount,
                 TotalCount = totalDataCount
             };
-
         }
     }
 }

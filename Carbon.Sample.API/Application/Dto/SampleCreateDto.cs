@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Carbon.Sample.API.Application.Dto.Base;
+using System;
 
 namespace Carbon.Sample.API.Application.Dto
 {
-	public class SampleCreateDto
-	{
-		public string Name { get; set; }
-		public Guid TenantId { get; set; }
-	}
+    public class SampleCreateDto : BaseRequestDto<SampleCreateDto>
+    {
+        public string Name { get; set; }
+    }
 }

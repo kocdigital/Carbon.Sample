@@ -1,16 +1,10 @@
-﻿using Carbon.PagedList;
-using Carbon.Sample.API.Application.Dto;
+﻿using Carbon.Sample.API.Application.Dto;
 using Carbon.Sample.API.Domain.Services.Abstract;
 using Carbon.Sample.API.Infrastructure;
 using Carbon.WebApplication.HttpAtrributes;
 using Carbon.WebApplication.TenantManagementHandler.ControllerAttributes;
 using Carbon.WebApplication.TenantManagementHandler.Interfaces;
-
-using HybridModelBinding;
-
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -18,12 +12,13 @@ using System.Threading.Tasks;
 
 namespace Carbon.Sample.API.Application.Controllers
 {
-
     public class SampleController : BaseController
     {
         private readonly ISampleService _sampleService;
+
         public SampleController(ISampleService sampleService)
-            : base(new List<ISolutionFilteredService>() { sampleService }, new List<IOwnershipFilteredService>() { sampleService })
+            : base(new List<ISolutionFilteredService>() { sampleService },
+                new List<IOwnershipFilteredService>() { sampleService })
         {
             _sampleService = sampleService;
         }
@@ -32,7 +27,7 @@ namespace Carbon.Sample.API.Application.Controllers
         /// <summary>
         /// Create Sample
         /// </summary>
-        /// <param name="filter">Sample filter model</param>
+        /// <param name="request">Sample filter model</param>
         /// <param name="tenantId">Tenant Id</param>
         /// <returns>Created Sample's Id</returns>
         [HttpPostCarbon]
@@ -40,28 +35,25 @@ namespace Carbon.Sample.API.Application.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [SolutionFilter]
         [OwnershipFilter("Sample_Create")]
-        public async Task<IActionResult> GetAllAsync([FromBody] SampleFilterDto filter, [FromHeader] Guid tenantId)
+        public async Task<IActionResult> GetAllAsync([FromBody] SampleFilterDto request)
         {
-            //model.TenantId = tenantId;
-            var result = await _sampleService.GetAllAsync(filter);
+            var result = await _sampleService.GetAllAsync(request);
             return Ok(result);
         }
 
         /// <summary>
         /// Create Sample
         /// </summary>
-        /// <param name="model">Sample creator model</param>
+        /// <param name="request">Sample creator model</param>
         /// <param name="tenantId">Tenant Id</param>
         /// <returns>Created Sample's Id</returns>
-        [HttpPostCarbon] 
+        [HttpPostCarbon]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [SolutionFilter]
         [OwnershipFilter("Sample_Create")]
-        public async Task<IActionResult> CreateSample([FromBody] SampleCreateDto model, [FromHeader] Guid tenantId)
+        public async Task<IActionResult> CreateSample([FromBody] SampleCreateDto request)
         {
-            model.TenantId = tenantId;
-            var result = await _sampleService.CreateAsync(model);
-
+            var result = await _sampleService.CreateAsync(request);
             return CreatedAtAction(nameof(CreateSample), new { id = result.Id }, new { id = result.Id });
         }
 
@@ -78,7 +70,8 @@ namespace Carbon.Sample.API.Application.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [SolutionFilter]
         [OwnershipFilter("Sample_Update")]
-        public async Task<IActionResult> UpdateSample([FromBody] SampleUpdateDto model, [FromHeader] Guid tenantId, Guid id)
+        public async Task<IActionResult> UpdateSample([FromBody] SampleUpdateDto model, [FromHeader] Guid tenantId,
+            Guid id)
         {
             model.Id = id;
             model.TenantId = tenantId;
@@ -98,7 +91,8 @@ namespace Carbon.Sample.API.Application.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [SolutionFilter]
         [OwnershipFilter("Sample_Delete")]
-        public async Task<IActionResult> DeleteSample([FromBody] SampleDeleteDto model, Guid id, [FromHeader] Guid tenantId)
+        public async Task<IActionResult> DeleteSample([FromBody] SampleDeleteDto model, Guid id,
+            [FromHeader] Guid tenantId)
         {
             model.Id = id;
             model.TenantId = tenantId;

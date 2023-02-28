@@ -29,7 +29,6 @@ builder.AddCarbonServices((services) =>
     services.AddHttpClientAuth();
     //Enables Solution based saga events for feature list etc
     services.ConfigureAsSolutionService(builder.Configuration);
-
     return services;
 });
 var app = builder.Build();
@@ -55,11 +54,14 @@ app.AddCarbonApplication((application) =>
     #endregion
 
     #region Solution Migration Registration
+
     var featuresets = SolutionMigration.GetFeatureSetMigration();
     foreach (var featureset in featuresets)
     {
-        app.RegisterAsFeatureSet(new FeatureSetCreationRequest() { FeatureSet = featureset, SolutionId = new Guid("D0F8427B-C637-42ED-F4BE-08D7F1B05268") });
+        app.RegisterAsFeatureSet(new FeatureSetCreationRequest()
+            { FeatureSet = featureset, SolutionId = new Guid("D0F8427B-C637-42ED-F4BE-08D7F1B05268") });
     }
+
     #endregion
 
     return application;

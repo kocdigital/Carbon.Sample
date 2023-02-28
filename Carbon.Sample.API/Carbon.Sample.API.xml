@@ -4,11 +4,19 @@
         <name>Carbon.Sample.API</name>
     </assembly>
     <members>
-        <member name="M:Carbon.Sample.API.Application.Controllers.SampleController.CreateSample(Carbon.Sample.API.Application.Dto.SampleCreateDto,System.Guid)">
+        <member name="M:Carbon.Sample.API.Application.Controllers.SampleController.GetAllAsync(Carbon.Sample.API.Application.Dto.SampleFilterDto)">
             <summary>
             Create Sample
             </summary>
-            <param name="model">Sample creator model</param>
+            <param name="request">Sample filter model</param>
+            <param name="tenantId">Tenant Id</param>
+            <returns>Created Sample's Id</returns>
+        </member>
+        <member name="M:Carbon.Sample.API.Application.Controllers.SampleController.CreateSample(Carbon.Sample.API.Application.Dto.SampleCreateDto)">
+            <summary>
+            Create Sample
+            </summary>
+            <param name="request">Sample creator model</param>
             <param name="tenantId">Tenant Id</param>
             <returns>Created Sample's Id</returns>
         </member>
