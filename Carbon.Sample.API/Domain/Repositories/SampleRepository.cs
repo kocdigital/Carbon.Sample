@@ -71,11 +71,11 @@ namespace Carbon.Sample.API.Domain.Repositories
 							.Field(x => x.TenantId)
 							.Value(filterDto.TenantId)));
 
-			if (filterDto.Ids?.Any(x => x != Guid.Empty) ?? false)
+			if (filterDto.IdList?.Any(x => !string.IsNullOrWhiteSpace(x)) ?? false)
 			{
 				filters.Add(r => r.Terms(c => c
 								.Field(x => x.Id)
-								.Terms(filterDto.Ids.Where(x => x != Guid.Empty)))
+								.Terms(filterDto.IdList.Where(x => !string.IsNullOrWhiteSpace(x))))
 						 );
 			}
 			if (!string.IsNullOrWhiteSpace(filterDto.Name))
@@ -94,7 +94,8 @@ namespace Carbon.Sample.API.Domain.Repositories
 			}
 			//ES paging is bit problematic, if you use paged data use with caution
 			var results = await _esRepo.FilterAsync(filters);
-			return new PagedList<SampleDto>(results.Select(x => x.Adapt<SampleDto>()).ToList(), filterDto.PageIndex, filterDto.PageSize);
+			var list = results.Select(x => x.Adapt<SampleDto>()).ToList();
+			return new PagedList<SampleDto>(list, filterDto.PageIndex, filterDto.PageSize);
 		}
 	}
 }

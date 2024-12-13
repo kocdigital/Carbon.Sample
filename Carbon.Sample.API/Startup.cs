@@ -31,7 +31,7 @@ namespace Carbon.Sample.API
 {
 	public class Startup : CarbonStartup<Startup>
 	{
-		public Startup(IConfiguration configuration, IWebHostEnvironment environment) : base(configuration, environment, false, false)
+		public Startup(IConfiguration configuration, IWebHostEnvironment environment) : base(configuration, environment, true, true)
 		{
 		}
 
