@@ -6,6 +6,12 @@
     <Version>1.1.0</Version>
   </PropertyGroup>
   <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Remove="Domain\Consumers\**" />
     <Compile Remove="Domain\Data\**" />
     <Compile Remove="helm\**" />
@@ -20,18 +26,18 @@
     <None Remove="helm\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Carbon.Common" Version="1.5.1" />
+    <PackageReference Include="Carbon.Common" Version="1.6.0" />
     <PackageReference Include="Carbon.Domain.Abstractions" Version="1.5.0" />
+    <PackageReference Include="Carbon.Domain.EntityFrameworkCore" Version="3.4.0" />
     <PackageReference Include="Carbon.ElasticSearch" Version="3.7.1" />
     <PackageReference Include="Carbon.ExceptionHandling.Abstractions" Version="1.3.1" />
     <PackageReference Include="Carbon.HttpClient.Auth" Version="1.0.3" />
-    <PackageReference Include="Carbon.MassTransit" Version="3.9.6" />
-    <PackageReference Include="Carbon.Redis" Version="2.9.0" />
-    <PackageReference Include="Carbon.TimeScaleDb.EntityFrameworkCore" Version="1.2.0" />
-    <PackageReference Include="Carbon.WebApplication" Version="4.5.6" />
-    <PackageReference Include="Carbon.Domain.EntityFrameworkCore" Version="3.3.5" />
-    <PackageReference Include="Carbon.WebApplication.EntityFrameworkCore" Version="2.3.5" />
-    <PackageReference Include="Carbon.WebApplication.SolutionService" Version="2.9.3" />
+    <PackageReference Include="Carbon.MassTransit" Version="3.10.0" />
+    <PackageReference Include="Carbon.Redis" Version="3.0.0" />
+    <PackageReference Include="Carbon.TimeScaleDb.EntityFrameworkCore" Version="1.3.0" />
+    <PackageReference Include="Carbon.WebApplication.EntityFrameworkCore" Version="2.4.0" />
+    <PackageReference Include="Carbon.WebApplication.SolutionService" Version="2.10.0" />
+    <PackageReference Include="Carbon.WebApplication" Version="4.6.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
